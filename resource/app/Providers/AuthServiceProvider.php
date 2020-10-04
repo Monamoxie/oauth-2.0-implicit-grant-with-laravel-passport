@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
+use League\OAuth2\Server\AuthorizationServer;
+use League\OAuth2\Server\Grant\ImplicitGrant;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -38,7 +40,26 @@ class AuthServiceProvider extends ServiceProvider
             'view-users' => 'View a list of all the users on the resource'
         ]);
 
-        Passport::tokensExpireIn(now()->addDays(1));
 
+        // typically, the consuming application needs to make request for a token using javascript or some front end languag 
+        // Passport::enableImplicitGrant();
+        //Passport::enableImplicitGrant();
+        $this->app->make(AuthorizationServer::class)->enableGrantType(
+            $this->makeImplicitGrant(),
+        );
+
+   
+    }
+
+    /**
+     * Create and configure an instance of the Implicit grant.
+     *
+     * @return \League\OAuth2\Server\Grant\ImplicitGrant
+     * 
+     * Do this to enable passport append ? to your callback instead of the default # it returns which the server cannot read 
+     */
+    protected function makeImplicitGrant()
+    {
+        return new ImplicitGrant(Passport::tokensExpireIn(), '?');  
     }
 }
