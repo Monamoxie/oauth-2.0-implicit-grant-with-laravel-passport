@@ -1,6 +1,6 @@
 ![Logo](resource/resources/images/logo.png)
 
-### OAuth 2.0 Framework - Authorization Code Grant (Standard Approach) 
+### OAuth 2.0 Framework - Implicit Code Grant 
 
 ### BRIEF OVERVIEW
 Hey, this is me trying to briefly pan out a practical demo of the OAuth 2.0 framework as implemented by the League OAuth2 Server and built upon by Laravel Passport. 
